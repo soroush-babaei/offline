@@ -1,8 +1,8 @@
 import os
 from telethon import TelegramClient
 
-api_id = 31744059
-api_hash = "e4ff9d5154c2d8e1a14dc71425acdbd2"
+api_id = 12345678
+api_hash = "Token"
 
 session_name = "personal_session"
 
