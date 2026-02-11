@@ -11,7 +11,7 @@ api_hash = "e4ff9d5154c2d8e1a14dc71425acdbd2"
 session_name = "personal_session"
 
 TIMEZONE = pytz.timezone("Asia/Tehran")
-DATA_FILE = "replied_users.json"
+DATA_FILE = "/tmp/replied_users.json"  # مهم برای Cloud
 
 PROFILE_URL = "https://t.me/your_username"
 
@@ -23,7 +23,6 @@ FOOTER = (
 # ============================================
 
 
-# ---------- load replied users ----------
 if os.path.exists(DATA_FILE):
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         replied_users = set(json.load(f))
@@ -45,20 +44,17 @@ def in_range(start, end):
 
 
 def offline_message():
-    d = now().weekday()  # Monday=0 ... Sunday=6
+    d = now().weekday()
 
-    # 🏫 School (همه روزها بجز پنجشنبه و جمعه)
     if d not in (3, 4) and in_range(time(7, 0), time(14, 15)):
         return "📚 من الان مدرسه‌ام، بعداً پاسخ میدم."
 
-    # 🧑‍💻 Saturday
     if d == 5:
         if in_range(time(17, 0), time(18, 0)):
             return "💻 الان کلاس برنامه‌نویسی‌ام."
         if in_range(time(19, 0), time(21, 45)):
             return "🏋️‍♂️ الان باشگاهم."
 
-    # 🌍 Sunday
     if d == 6 and in_range(time(17, 15), time(18, 45)):
         return "🌍 الان کلاس زبانم."
 
@@ -68,7 +64,6 @@ def offline_message():
 client = TelegramClient(session_name, api_id, api_hash)
 
 
-# ---------- Message Handler ----------
 @client.on(events.NewMessage(incoming=True))
 async def handler(event):
     if not event.is_private:
@@ -77,11 +72,9 @@ async def handler(event):
     sender = await event.get_sender()
     user_id = sender.id
 
-    # فقط یک‌بار جواب بده
     if user_id in replied_users:
         return
 
-    # تشخیص آنلاین بودن واقعی
     try:
         me = await client(GetFullUserRequest("me"))
         if me.user.status and me.user.status.__class__.__name__ == "UserStatusOnline":
@@ -103,13 +96,11 @@ async def handler(event):
     save_users()
 
 
-# ---------- Button Callback ----------
 @client.on(events.CallbackQuery)
 async def callback(event):
     await event.answer("👍", alert=False)
 
 
-# ---------- Main ----------
 async def main():
     print("👤 Personal Auto Reply is running...")
     await client.run_until_disconnected()
