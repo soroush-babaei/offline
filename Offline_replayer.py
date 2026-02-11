@@ -6,8 +6,8 @@ import os
 import json
 
 # ================== CONFIG ==================
-api_id = 31744059
-api_hash = "e4ff9d5154c2d8e1a14dc71425acdbd2"
+api_id = int(os.getenv("API_ID"))
+api_hash = os.getenv("API_HASH")
 session_name = "personal_session"
 
 TIMEZONE = pytz.timezone("Asia/Tehran")
