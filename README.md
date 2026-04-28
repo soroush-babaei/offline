@@ -19,7 +19,7 @@
 
 1. **کلون کردن رپازیتوری:**
    ```bash
-   git clone https://github.com/soroush-babaei/offline.git
+   git clone https://github.com/soroush-babaei/Telegram-Auto-Reply-Bot.git
    cd offline
 
 2. **نصب وابستگی‌ها:**
