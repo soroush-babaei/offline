@@ -38,8 +38,7 @@ A powerful Python-based Telegram bot that automatically manages and replies to m
 
 
 
-**ir Farsi**
-
+## ir Farsi
 # 🤖 ربات پاسخگوی خودکار تلگرام
 
 دیگه هیچ پیامی بدون جواب نمیمونه! 🚀
